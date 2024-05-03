@@ -14,7 +14,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: [
+      "http://localhost:3000",
+      "https://profound-platypus-2825d4.netlify.app",
+    ],
     credentials: true,
   })
 );
