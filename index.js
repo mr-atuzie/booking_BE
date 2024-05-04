@@ -12,8 +12,8 @@ const userRoute = require("./routes/user");
 app.use(
   cors({
     origin: [
-      "http://localhost:3000",
       "https://profound-platypus-2825d4.netlify.app",
+      "http://localhost:3000",
     ],
     credentials: true,
   })
