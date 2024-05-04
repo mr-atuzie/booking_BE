@@ -46,7 +46,7 @@ const login = asyncHandler(async (req, res) => {
     httpOnly: true,
     expires: new Date(Date.now() + 1000 * 86400),
     sameSite: "none",
-    //   secure: true,
+      secure: true,
   });
 
   res.status(200).json(userDoc);
