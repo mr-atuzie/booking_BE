@@ -8,6 +8,7 @@ const app = express();
 const connectDB = require("./config/db");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const userRoute = require("./routes/user");
+const placeRoute = require("./routes/place");
 
 app.use(
   cors({
@@ -24,6 +25,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use("/api/v1/user", userRoute);
+app.use("/api/v1/place", placeRoute);
 
 app.get("/", (req, res) => {
   res.send("Hello world ;)");
