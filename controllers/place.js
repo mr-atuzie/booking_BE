@@ -5,7 +5,7 @@ const download = require("image-downloader");
 const uploadByLink = asyncHandler(async (req, res) => {
   const { link } = req.body;
 
-  const newName = Dtae.now() + "jpg";
+  const newName = Date.now() + "jpg";
 
   await download.image({
     url: link,
