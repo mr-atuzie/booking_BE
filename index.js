@@ -70,7 +70,7 @@ app.post("/upload", photoMiddleware.array("photos", 100), (req, res) => {
 
     console.log("new");
 
-    console.log(newpath);
+    console.log(newPath);
 
     uplodedFiles.push(newPath.replace("uploads\\", ""));
   }
