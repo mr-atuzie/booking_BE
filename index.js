@@ -58,8 +58,6 @@ const photoMiddleware = multer({ dest: "uploads" });
 app.post("/upload", photoMiddleware.array("photos", 100), (req, res) => {
   const uplodedFiles = [];
 
-  console.log(req.files);
-
   for (let i = 0; i < req.files.length; i++) {
     const { path, originalname } = req.files[i];
     const parts = originalname.split(".");
@@ -68,14 +66,9 @@ app.post("/upload", photoMiddleware.array("photos", 100), (req, res) => {
 
     fs.renameSync(path, newPath);
 
-    console.log("new");
-
-    console.log(newPath);
-
     uplodedFiles.push(newPath.replace("uploads/", ""));
   }
 
-  console.log(uplodedFiles);
   res.json(uplodedFiles);
 });
 
