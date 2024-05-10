@@ -68,6 +68,10 @@ app.post("/upload", photoMiddleware.array("photos", 100), (req, res) => {
 
     fs.renameSync(path, newPath);
 
+    console.log("new");
+
+    console.log(newpath);
+
     uplodedFiles.push(newPath.replace("uploads\\", ""));
   }
 
