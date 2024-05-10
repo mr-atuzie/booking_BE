@@ -46,7 +46,7 @@ const login = asyncHandler(async (req, res) => {
     httpOnly: true,
     expires: new Date(Date.now() + 1000 * 86400),
     sameSite: "none",
-      secure: true,
+    secure: true,
   });
 
   res.status(200).json(userDoc);
@@ -71,13 +71,7 @@ const profile = asyncHandler(async (req, res) => {
 });
 
 const logout = asyncHandler(async (req, res) => {
-  res.cookie("token", "", {
-    path: "/",
-    httpOnly: true,
-    expires: new Date(0),
-    sameSite: "none",
-    //   secure: true,
-  });
+  res.clearCookie("token");
 
   res.status(200).json("Successfully Logged Out");
 });

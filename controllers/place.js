@@ -1,18 +1,109 @@
 const asyncHandler = require("express-async-handler");
 const Place = require("../models/Place");
-const download = require("image-downloader");
+const jwt = require("jsonwebtoken");
 
-const uploadByLink = asyncHandler(async (req, res) => {
-  const { link } = req.body;
+const addPlace = asyncHandler(async (req, res) => {
+  const { token } = req.cookies;
 
-  const newName = Date.now() + "jpg";
+  const {
+    title,
+    address,
+    photos,
+    description,
+    perks,
+    extraInfo,
+    checkIn,
+    checkOut,
+    maxGuests,
+    price,
+  } = req.body;
 
-  await download.image({
-    url: link,
-    dest: __dirname + "/uploads/" + newName,
+  //Verify token
+  const userData = jwt.verify(token, process.env.JWT_SECRET);
+
+  const placeDoc = await Place.create({
+    postedBy: userData.id,
+    title,
+    address,
+    photos,
+    description,
+    perks,
+    extraInfo,
+    checkIn,
+    checkOut,
+    maxGuests,
+    price,
   });
 
-  res.json(__dirname + "/uploads/" + newName);
+  res.status(201).json(placeDoc);
 });
 
-module.exports = { uploadByLink };
+const getuserPlaces = asyncHandler(async (req, res) => {
+  const { token } = req.cookies;
+
+  //Verify token
+  const userData = jwt.verify(token, process.env.JWT_SECRET);
+
+  const userPlaceDoc = await Place.find({ postedBy: userData.id });
+
+  res.status(200).json(userPlaceDoc);
+});
+const getPlaces = asyncHandler(async (req, res) => {
+  const placesDoc = await Place.find({});
+
+  res.status(200).json(placesDoc);
+});
+
+const getPlace = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  const placeDoc = await Place.findById(id);
+
+  res.status(200).json(placeDoc);
+});
+
+const updatePlace = asyncHandler(async (req, res) => {
+  const { token } = req.cookies;
+
+  const {
+    id,
+    title,
+    address,
+    photos,
+    description,
+    perks,
+    extraInfo,
+    checkIn,
+    checkOut,
+    maxGuests,
+    price,
+  } = req.body;
+
+  //Verify token
+  const userData = jwt.verify(token, process.env.JWT_SECRET);
+
+  const placeDoc = await Place.findById(id);
+
+  if (userData.id === placeDoc.postedBy.toString()) {
+    placeDoc.set({
+      title,
+      address,
+      photos,
+      description,
+      perks,
+      extraInfo,
+      checkIn,
+      checkOut,
+      maxGuests,
+      price,
+    });
+
+    await placeDoc.save();
+    res.status(201).json(placeDoc);
+  } else {
+    res.status(401);
+    throw new Error("unable to performe request");
+  }
+});
+
+module.exports = { addPlace, getuserPlaces, getPlace, updatePlace, getPlaces };
