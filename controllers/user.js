@@ -71,9 +71,18 @@ const profile = asyncHandler(async (req, res) => {
 });
 
 const logout = asyncHandler(async (req, res) => {
-  res.clearCookie("token");
+  res.cookie("token", "", {
+    path: "/",
+    httpOnly: true,
+    expires: new Date(0),
+    sameSite: "none",
+    secure: true,
+  });
 
-  res.status(200).json("Successfully Logged Out");
+  return res.status(200).json({
+    success: true,
+    message: "Log out Successful",
+  });
 });
 
 module.exports = { register, login, profile, logout };
