@@ -60,27 +60,20 @@ const profile = asyncHandler(async (req, res) => {
   }
 
   //Verify token
-  const userData = jwt.verify(token, process.env.JWT_SECRET);
-
-  if (userData) {
-    const { name, email, _id } = await User.findById(userData.id);
-    res.json({ id: _id, name, email });
-  } else {
-    res.json(false);
-  }
+  jwt.verify(token, process.env.JWT_SECRET, async (err, userData) => {
+    if (err) {
+      res.json(false);
+    } else {
+      const { name, email, _id } = await User.findById(userData.id);
+      res.json({ id: _id, name, email });
+    }
+  });
 });
 
 const logout = asyncHandler(async (req, res) => {
   res.clearCookie("token");
 
-  const { token } = req.cookies;
-
-  console.log(token);
-
-  res.status(200).json({
-    msg: "Successfully Logged Out",
-    token,
-  });
+  res.status(200).json("Successfully Logged Out");
 });
 
 module.exports = { register, login, profile, logout };
