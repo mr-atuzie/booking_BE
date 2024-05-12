@@ -53,21 +53,20 @@ const login = asyncHandler(async (req, res) => {
 });
 
 const profile = asyncHandler(async (req, res) => {
-  const { token } = req.cookies;
+  const token = req.cookies.token;
 
   if (!token) {
     return res.json(false);
   }
 
-  //Verify token
-  jwt.verify(token, process.env.JWT_SECRET, async (err, userData) => {
-    if (err) {
-      res.json(false);
-    } else {
-      const { name, email, _id } = await User.findById(userData.id);
-      res.json({ id: _id, name, email });
-    }
-  });
+  const verified = jwt.verify(token, process.env.JWT_SECRET);
+
+  if (verified) {
+    const userDoc = await User.findById(verified.id);
+    res.json({ name: userDoc.name, id: userDoc._id, email: userDoc.email });
+  } else {
+    return res.json(fasle);
+  }
 });
 
 const logout = asyncHandler(async (req, res) => {
@@ -79,8 +78,11 @@ const logout = asyncHandler(async (req, res) => {
     secure: true,
   });
 
+  const token = req.cookies.token;
+
   return res.status(200).json({
     success: true,
+    token,
     message: "Log out Successful",
   });
 });
