@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Place = require("../models/Place");
 const jwt = require("jsonwebtoken");
+const Booking = require("../models/Booking");
 
 const addPlace = asyncHandler(async (req, res) => {
   const { token } = req.cookies;
@@ -106,4 +107,27 @@ const updatePlace = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { addPlace, getuserPlaces, getPlace, updatePlace, getPlaces };
+const bookPlace = asyncHandler(async (req, res) => {
+  const { place, name, checkIn, checkOut, maxGuests, mobile, price } = req.body;
+
+  const bookingDoc = await Booking.create({
+    place,
+    name,
+    checkIn,
+    checkOut,
+    mobile,
+    price,
+    maxGuests,
+  });
+
+  res.status(201).json(bookingDoc);
+});
+
+module.exports = {
+  addPlace,
+  getuserPlaces,
+  getPlace,
+  updatePlace,
+  getPlaces,
+  bookPlace,
+};
