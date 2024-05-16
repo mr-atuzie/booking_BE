@@ -49,6 +49,7 @@ const getuserPlaces = asyncHandler(async (req, res) => {
 
   res.status(200).json(userPlaceDoc);
 });
+
 const getPlaces = asyncHandler(async (req, res) => {
   const placesDoc = await Place.find({});
 
