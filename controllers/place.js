@@ -109,10 +109,15 @@ const updatePlace = asyncHandler(async (req, res) => {
 });
 
 const bookPlace = asyncHandler(async (req, res) => {
+  const { token } = req.cookies;
   const { place, name, checkIn, checkOut, maxGuests, mobile, price } = req.body;
+
+  //Verify token
+  const userData = jwt.verify(token, process.env.JWT_SECRET);
 
   const bookingDoc = await Booking.create({
     place,
+    user: userData.id,
     name,
     checkIn,
     checkOut,
@@ -124,6 +129,25 @@ const bookPlace = asyncHandler(async (req, res) => {
   res.status(201).json(bookingDoc);
 });
 
+const getBookings = asyncHandler(async (req, res) => {
+  const { token } = req.cookies;
+
+  //Verify token
+  const userData = jwt.verify(token, process.env.JWT_SECRET);
+
+  const bookingDoc = await Booking.find({ user: userData.id });
+
+  res.status(201).json(bookingDoc);
+});
+
+const getBooking = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  const bookingDoc = await Booking.findById(id);
+
+  res.status(200).json(bookingDoc);
+});
+
 module.exports = {
   addPlace,
   getuserPlaces,
@@ -131,4 +155,6 @@ module.exports = {
   updatePlace,
   getPlaces,
   bookPlace,
+  getBookings,
+  getBooking,
 };
