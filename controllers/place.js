@@ -144,7 +144,7 @@ const getBookings = asyncHandler(async (req, res) => {
 const getBooking = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
-  const bookingDoc = await Booking.findById(id);
+  const bookingDoc = await Booking.findById(id).populate("place");
 
   res.status(200).json(bookingDoc);
 });
