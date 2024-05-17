@@ -12,13 +12,13 @@ const {
 
 const router = express.Router();
 
+router.get("/bookings", getBookings);
+router.get("/bookings/:id", getBooking);
 router.post("/", addPlace);
 router.post("/book", bookPlace);
 router.put("/", updatePlace);
 router.get("/user-place", getuserPlaces);
 router.get("/:id", getPlace);
 router.get("/", getPlaces);
-router.get("/bookings/:id", getBooking);
-router.get("/bookings", getBookings);
 
 module.exports = router;

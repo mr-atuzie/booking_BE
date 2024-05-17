@@ -132,10 +132,11 @@ const bookPlace = asyncHandler(async (req, res) => {
 const getBookings = asyncHandler(async (req, res) => {
   const { token } = req.cookies;
 
-  //Verify token
   const userData = jwt.verify(token, process.env.JWT_SECRET);
 
-  const bookingDoc = await Booking.find({ user: userData.id });
+  const bookingDoc = await Booking.find({ user: userData.id }).populate(
+    "place"
+  );
 
   res.status(201).json(bookingDoc);
 });
