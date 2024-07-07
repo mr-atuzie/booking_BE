@@ -17,6 +17,18 @@ const register = asyncHandler(async (req, res) => {
     password: hashedPassword,
   });
 
+  //generate token
+  const token = generateToken(userDoc._id, userDoc.email);
+
+  //attach cookie
+  res.cookie("token", token, {
+    path: "/",
+    httpOnly: true,
+    expires: new Date(Date.now() + 1000 * 86400),
+    sameSite: "none",
+    secure: true,
+  });
+
   res.status(201).json(userDoc);
 });
 

@@ -6,8 +6,6 @@ const Booking = require("../models/Booking");
 const addPlace = asyncHandler(async (req, res) => {
   const { token } = req.cookies;
 
-  console.log(cookies);
-
   const {
     title,
     address,
