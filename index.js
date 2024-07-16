@@ -17,10 +17,7 @@ const placeRoute = require("./routes/place");
 
 app.use(
   cors({
-    origin: [
-      "https://profound-platypus-2825d4.netlify.app",
-      "http://localhost:3000",
-    ],
+    origin: ["https://nation-properties.netlify.app", "http://localhost:3000"],
     credentials: true,
   })
 );
