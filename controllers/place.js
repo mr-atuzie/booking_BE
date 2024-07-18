@@ -6,6 +6,11 @@ const Booking = require("../models/Booking");
 const addPlace = asyncHandler(async (req, res) => {
   const { token } = req.cookies;
 
+  if (!token) {
+    res.status(400);
+    throw new Error("Not authorized, please login");
+  }
+
   const {
     title,
     address,
@@ -21,6 +26,11 @@ const addPlace = asyncHandler(async (req, res) => {
 
   //Verify token
   const userData = jwt.verify(token, process.env.JWT_SECRET);
+
+  if (!userData) {
+    res.status(400);
+    throw new Error("Invalid or expired token");
+  }
 
   const placeDoc = await Place.create({
     postedBy: userData.id,
@@ -42,8 +52,18 @@ const addPlace = asyncHandler(async (req, res) => {
 const getuserPlaces = asyncHandler(async (req, res) => {
   const { token } = req.cookies;
 
+  if (!token) {
+    res.status(400);
+    throw new Error("Not authorized, please login");
+  }
+
   //Verify token
   const userData = jwt.verify(token, process.env.JWT_SECRET);
+
+  if (!userData) {
+    res.status(400);
+    throw new Error("Invalid or expired token");
+  }
 
   const userPlaceDoc = await Place.find({ postedBy: userData.id });
 
@@ -110,10 +130,21 @@ const updatePlace = asyncHandler(async (req, res) => {
 
 const bookPlace = asyncHandler(async (req, res) => {
   const { token } = req.cookies;
+
+  if (!token) {
+    res.status(400);
+    throw new Error("Not authorized, please login");
+  }
+
   const { place, name, checkIn, checkOut, maxGuests, mobile, price } = req.body;
 
   //Verify token
   const userData = jwt.verify(token, process.env.JWT_SECRET);
+
+  if (!userData) {
+    res.status(400);
+    throw new Error("Invalid or expired token");
+  }
 
   const bookingDoc = await Booking.create({
     place,
@@ -132,7 +163,17 @@ const bookPlace = asyncHandler(async (req, res) => {
 const getBookings = asyncHandler(async (req, res) => {
   const { token } = req.cookies;
 
+  if (!token) {
+    res.status(400);
+    throw new Error("Not authorized, please login");
+  }
+
   const userData = jwt.verify(token, process.env.JWT_SECRET);
+
+  if (!userData) {
+    res.status(400);
+    throw new Error("Invalid or expired token");
+  }
 
   const bookingDoc = await Booking.find({ user: userData.id }).populate(
     "place"
