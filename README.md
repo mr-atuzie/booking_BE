@@ -1,5 +1,5 @@
-## Secure Auth - 2FA with email - Server sider
-is a authentication platform designed to implement Two-Factor Authentication (2FA) using email.It provides a authentication mechanism that enhances security by requiring users to verify their identity through a code sent to their email and also Password Management system for Forget and Reset Password.
+## Nation properties - Booking App - Server sider
+This project is a full-stack booking application built with the MERN stack (MongoDB, Express, React, Node.js), inspired by Airbnb. Users can upload and list their properties, search for accommodations, and book stays, calculation of stay duration and pricing to ensure a seamless booking experience for both hosts and guest.
 
 ## Features
 - User authentication and authorization
