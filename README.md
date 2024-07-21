@@ -4,7 +4,7 @@ This project is a full-stack booking application built with the MERN stack (Mong
 ## Features
 - User authentication and authorization
 - Upload Property with images
-- Upadte proprty 
+- Update proprty 
 - Automatic calculation of stay duration and total price based on check-in and check-out dates
 - Book proprety
 
@@ -44,6 +44,7 @@ PORT=7000
 DB=your_mongodb_uri
 JWT_SECRET=your_jwt_secret
 FRONTEND_URL=your_frontend_url
+NODE_ENV=production
 ```
 
 ### Start the development servers
