@@ -25,11 +25,11 @@ This project is a full-stack booking application built with the MERN stack (Mong
 ### Prerequisites
 - Node.js and npm installed
 
-From your command line, first clone SecureAuth:
+From your command line, first clone the app:
 ### 
 ```bash
 # Clone this repository
-$ git clone https://github.com/mr-atuzie/boking_BE
+$ git clone https://github.com/mr-atuzie/booking_BE
 
 # Go into the repository
 $ cd booking_BE
