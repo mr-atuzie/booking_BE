@@ -4,6 +4,7 @@
 - Technologies Used.
 - Installation
 - Environment Variables
+- Usage
 - Contributing
 - Author
 
@@ -60,6 +61,28 @@ NODE_ENV=production
 $ npm run start
 $ npm run dev
 ```
+## Usage
+### API Endpoints:
+Here are some of the key API endpoints available,to test your API endpoints, you can use Postman. 
+
+**User Endpoints:**
+```bash
+# Register a new user
+POST /api/users/register
+
+#Log in a user and obtain a JWT token
+POST /api/users/login
+
+# Send an reset password token to user email 
+POST /api/users/forgot-password
+
+# Destroy user HTTPS cookie
+POST /api/users/logout
+
+# Retrieve user profile data (authentication required).
+GET /api/users/profile
+```
+
 ## Related Repositories
 Frontend Repository: [https://github.com/mr-atuzie/booking_FE](https://github.com/mr-atuzie/booking_FE)
 
